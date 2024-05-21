@@ -20,8 +20,8 @@ jobs:
             docker-compose -f docker-compose-build.yaml build --parallel
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
             docker push ${DOCKERHUB_USERNAME}/reverseproxy:latest
-            docker push ${DOCKERHUB_USERNAME}/udagram-api-user
-            docker push ${DOCKERHUB_USERNAME}/udagram-api-feed
+            docker push ${DOCKERHUB_USERNAME}/udagram-api-user:latest
+            docker push ${DOCKERHUB_USERNAME}/udagram-api-feed:latest
             docker push ${DOCKERHUB_USERNAME}/udagram-frontend:local
 workflows:
   version: 2
