@@ -11,12 +11,12 @@ jobs:
           version: 20.10.14
       - run:
           name: Install Docker Compose
-           command: |
+           command:
             sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             sudo chmod +x /usr/local/bin/docker-compose
       - run:
           name: Build and push Docker image
-          command: |
+          command:
             docker-compose -f docker-compose-build.yaml build
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
             docker push ${DOCKERHUB_USERNAME}/reverseproxy
