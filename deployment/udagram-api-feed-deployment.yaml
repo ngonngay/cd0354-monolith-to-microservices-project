@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: backend-feed
-        image: thangnqvlth/udagram-api-feed
+        image: thangnqvlth/udagram-api-feed:latest
         imagePullPolicy: Always
         resources:
           requests:

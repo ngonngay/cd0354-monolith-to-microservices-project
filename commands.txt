@@ -1,0 +1,5 @@
+eksctl delete cluster --region=us-east-2 --name=project3-eks-4
+eksctl create cluster --name myCluster --region=us-east-1
+
+publicfrontend= a4546ae6c35cc4a50877f8b3f29d3f93-1250246953.us-east-1.elb.amazonaws.com
+publicreverseproxy   LoadBalancer   10.100.189.51    a51ae61bc83cf4cd2836e78cc3fb7e8d-1172085408.us-east-1.elb.amazonaws.com
