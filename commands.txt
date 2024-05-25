@@ -1,5 +1,23 @@
-eksctl delete cluster --region=us-east-2 --name=project3-eks-4
+eksctl delete cluster --region=us-east-1 --name=project3-eks-4
 eksctl create cluster --name myCluster --region=us-east-1
 
-publicfrontend= a4546ae6c35cc4a50877f8b3f29d3f93-1250246953.us-east-1.elb.amazonaws.com
-publicreverseproxy   LoadBalancer   10.100.189.51    a51ae61bc83cf4cd2836e78cc3fb7e8d-1172085408.us-east-1.elb.amazonaws.com
+publicfrontend       LoadBalancer   10.100.48.148    a959c4bb6912b4eaeaff1682a494b036-1366380317.us-east-1.elb.amazonaws.com   80:32022/TCP     108s
+publicreverseproxy   LoadBalancer   10.100.215.105   a8f752a6e8eb54a1ebd9f8ff9fea69b4-1099291922.us-east-1.elb.amazonaws.com   8080:31373/TCP   3s
+kubectl apply -f aws-secret.yaml
+kubectl apply -f env-secret.yaml
+kubectl apply -f env-configmap.yaml
+
+kubectl apply -f udagram-api-feed-deployment.yaml
+kubectl apply -f udagram-api-feed-service.yaml
+
+kubectl apply -f udagram-api-user-deployment.yaml
+kubectl apply -f udagram-api-user-service.yaml
+
+kubectl apply -f udagram-frontend-deployment.yaml
+kubectl apply -f udagram-frontend-service.yaml
+
+kubectl apply -f udagram-reverseproxy-deployment.yaml
+kubectl apply -f udagram-reverseproxy-service.yaml
+
+kubectl get pods
+ubectl describe pod backend-feed-d45fc5f9-k9csb
