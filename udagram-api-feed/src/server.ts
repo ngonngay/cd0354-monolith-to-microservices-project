@@ -20,9 +20,6 @@ import {V0_FEED_MODELS} from './controllers/v0/model.index';
 
   app.use(bodyParser.json());
 
-  // We set the CORS origin to * so that we don't need to
-  // worry about the complexities of CORS this lesson. It's
-  // something that will be covered in the next course.
   app.use(cors({
     allowedHeaders: [
       'Origin', 'X-Requested-With',
@@ -30,10 +27,15 @@ import {V0_FEED_MODELS} from './controllers/v0/model.index';
       'X-Access-Token', 'Authorization',
     ],
     methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-    preflightContinue: true,
-    origin: '*',
+    preflightContinue: false,
+    origin: '*', // Allow all origins
   }));
-
+  
+  // Handle preflight requests
+  app.options('*', cors());
+  app.get('/test-cors', (req, res) => {
+    res.json({ message: 'CORS is working!' });
+  });
   app.use('/api/v0/', IndexRouter);
 
   // Root URI call

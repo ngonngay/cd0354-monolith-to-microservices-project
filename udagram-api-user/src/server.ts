@@ -30,9 +30,12 @@ import { V0_USER_MODELS} from './controllers/v0/model.index';
       'X-Access-Token', 'Authorization',
     ],
     methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-    preflightContinue: true,
-    origin: '*',
+    preflightContinue: false,
+    origin: '*', // Allow all origins
   }));
+  
+  // Handle preflight requests
+  app.options('*', cors());
 
   app.use('/api/v0/', IndexRouter);
 

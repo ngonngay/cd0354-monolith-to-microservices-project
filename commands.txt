@@ -1,8 +1,11 @@
 eksctl delete cluster --region=us-east-1 --name=project3-eks-4
-eksctl create cluster --name myCluster --region=us-east-1
+eksctl create cluster  --region=us-east-1 --name myCluster
 
-publicfrontend       LoadBalancer   10.100.48.148    a959c4bb6912b4eaeaff1682a494b036-1366380317.us-east-1.elb.amazonaws.com   80:32022/TCP     108s
-publicreverseproxy   LoadBalancer   10.100.215.105   a8f752a6e8eb54a1ebd9f8ff9fea69b4-1099291922.us-east-1.elb.amazonaws.com   8080:31373/TCP   3s
+docker image prune --all
+docker-compose -f docker-compose-build.yaml build --parallel
+
+publicfrontend       acfaf93f70d684e08b3c19fa53c38070-505840003.us-east-1.elb.amazonaws.com
+publicreverseproxy   aed9eceb3f3eb47b2b227103b94dd6df-1095193706.us-east-1.elb.amazonaws.com
 kubectl apply -f aws-secret.yaml
 kubectl apply -f env-secret.yaml
 kubectl apply -f env-configmap.yaml
@@ -20,4 +23,13 @@ kubectl apply -f udagram-reverseproxy-deployment.yaml
 kubectl apply -f udagram-reverseproxy-service.yaml
 
 kubectl get pods
-ubectl describe pod backend-feed-d45fc5f9-k9csb
+kubectl expose deployment frontend --type=LoadBalancer --name=publicfrontend
+kubectl expose deployment reverseproxy --type=LoadBalancer --name=publicreverseproxy
+kubectl autoscale deployment backend-user --cpu-percent=70 --min=3 --max=5
+kubectl autoscale deployment backend-feed --cpu-percent=70 --min=3 --max=5
+
+kubectl describe pod backend-feed-74998c4d85-tfb25
+
+docker build . -t thangnqvlth/udagram-frontend:v7
+docker push thangnqvlth/udagram-frontend:v7
+kubectl set image deployment frontend frontend=thangnqvlth/udagram-frontend:v7
